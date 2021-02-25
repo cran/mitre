@@ -1,79 +1,54 @@
-#' MITRE Shield Tactics data frame
+#' ETL process that read source data from \url{https://github.com/MITRECND/mitrecnd.github.io/tree/master/_data} .
 #'
-#' @return ETL process that read source data from \url{https://github.com/MITRECND/mitrecnd.github.io/tree/master/_data} .
+#' @return MITRE Shield Tactics data frame
 #'   The data frame columns are: id, name, description, long_description.
-#' @export
-#' @examples
-#' \donttest{
-#' shield.tactics <- getShieldTactics()
-#' }
+#' @keywords internal
 getShieldTactics <- function() {
-  tactics_url <- "https://raw.githubusercontent.com/MITRECND/mitrecnd.github.io/master/_data/tactics.json"
-  tactics <- jsonlite::fromJSON(tactics_url)
+  tactics <- jsonlite::fromJSON("data-raw/shield-tactics.json")
 
   return(tactics)
 }
 
-#' MITRE Shield Techniques data frame
+#' ETL process that read source data from \url{https://github.com/MITRECND/mitrecnd.github.io/tree/master/_data} .
 #'
-#' @return ETL process that read source data from \url{https://github.com/MITRECND/mitrecnd.github.io/tree/master/_data} .
+#' @return MITRE Shield Techniques data frame
 #'   The data frame columns are: id, name, description, long_description.
-#' @export
-#' @examples
-#' \donttest{
-#' shield.techniques <- getShieldTechniques()
-#' }
+#' @keywords internal
 getShieldTechniques <- function() {
-  tech_url <- "https://raw.githubusercontent.com/MITRECND/mitrecnd.github.io/master/_data/techniques.json"
-  tech <- jsonlite::fromJSON(tech_url)
+  tech <- jsonlite::fromJSON("data-raw/shield-techniques.json")
 
   return(tech)
 }
 
-#' MITRE Shield Opportunities data frame
+#' ETL process that read source data from \url{https://github.com/MITRECND/mitrecnd.github.io/tree/master/_data} .
 #'
-#' @return ETL process that read source data from \url{https://github.com/MITRECND/mitrecnd.github.io/tree/master/_data} .
+#' @return MITRE Shield Opportunities data frame
 #'   The data frame columns are: id, description.
-#' @export
-#' @examples
-#' \donttest{
-#' opportunities <- getShieldOpportunities()
-#' }
+#' @keywords internal
 getShieldOpportunities <- function() {
-  opport_url <- "https://raw.githubusercontent.com/MITRECND/mitrecnd.github.io/master/_data/opportunities.json"
-  opport <- jsonlite::fromJSON(opport_url)
+  opport <- jsonlite::fromJSON("data-raw/shield-opportunities.json")
 
   return(opport)
 }
 
-#' MITRE Shield Procedures data frame
+#' ETL process that read source data from \url{https://github.com/MITRECND/mitrecnd.github.io/tree/master/_data} .
 #'
-#' @return ETL process that read source data from \url{https://github.com/MITRECND/mitrecnd.github.io/tree/master/_data} .
+#' @return MITRE Shield Procedures data frame
 #'   The data frame columns are: id, description.
-#' @export
-#' @examples
-#' \donttest{
-#' procedures <- getShieldProcedures()
-#' }
+#' @keywords internal
 getShieldProcedures <- function() {
-  proced_url <- "https://raw.githubusercontent.com/MITRECND/mitrecnd.github.io/master/_data/procedures.json"
-  proced <- jsonlite::fromJSON(proced_url)
+  proced <- jsonlite::fromJSON("data-raw/shield-procedures.json")
 
   return(proced)
 }
 
-#' MITRE Shield Use Cases data frame
+#' ETL process that read source data from \url{https://github.com/MITRECND/mitrecnd.github.io/tree/master/_data} .
 #'
-#' @return ETL process that read source data from \url{https://github.com/MITRECND/mitrecnd.github.io/tree/master/_data} .
+#' @return MITRE Shield Use Cases data frame
 #'   The data frame columns are: id, description.
-#' @export
-#' @examples
-#' \donttest{
-#' usecases <- getShieldUseCases()
-#' }
+#' @keywords internal
 getShieldUseCases <- function() {
-  usecase_url <- "https://raw.githubusercontent.com/MITRECND/mitrecnd.github.io/master/_data/use_cases.json"
-  usecase <- jsonlite::fromJSON(usecase_url)
+  usecase <- jsonlite::fromJSON("data-raw/shield-use_cases.json")
   usecase <- usecase[, 1:2]
 
   return(usecase)
@@ -82,14 +57,9 @@ getShieldUseCases <- function() {
 #' MITRE Shield Tactics detailed data frame
 #'
 #' @return data.frame
-#' @export
-#' @examples
-#' \donttest{
-#' tactics <- getShieldTactictDetail()
-#' }
+#' @keywords internal
 getShieldTactictDetail <- function() {
-  tact_det_url <- "https://raw.githubusercontent.com/MITRECND/mitrecnd.github.io/master/_data/tactic_details.json"
-  tact_det <- jsonlite::fromJSON(tact_det_url)
+  tact_det <- jsonlite::fromJSON("data-raw/shield-tactic_details.json")
   tact_det <- plyr::ldply(tact_det, function(x) x[["techniques"]])
   names(tact_det)[1:2] <- c("tact_id", "tech_id")
 
@@ -99,13 +69,9 @@ getShieldTactictDetail <- function() {
 #' MITRE Shield Techniques detailed data frame
 #'
 #' @return data.frame
-#' @export
-#' @examples
-#' \donttest{
-#' technique <- getShieldTechniquesDetail()
-#' }
+#' @keywords internal
 getShieldTechniquesDetail <- function() {
-  tech_det_url <- "https://raw.githubusercontent.com/MITRECND/mitrecnd.github.io/master/_data/technique_details.json"
+  tech_det_url <- "data-raw/shield-technique_details.json"
   tech_det <- jsonlite::fromJSON(tech_det_url)
 
   return(tech_det)
@@ -114,11 +80,7 @@ getShieldTechniquesDetail <- function() {
 #' MITRE Shield objects relations data frame
 #'
 #' @return data.frame
-#' @export
-#' @examples
-#' \donttest{
-#' relations <- getShieldRelations()
-#' }
+#' @keywords internal
 getShieldRelations <- function() {
   tact_det <- getShieldTactictDetail()
   tech_det <- getShieldTechniquesDetail()
@@ -205,22 +167,19 @@ getShieldRelations <- function() {
   df$.id <- NULL
   relations <- dplyr::bind_rows(relations, df)
 
+  relations$label <- rep("uses", nrow(relations))
+  relations$arrows <- rep("to", nrow(relations))
+  relations$title <- rep("uses", nrow(relations))
+  relations$dashes <- rep(FALSE, nrow(relations))
+
   return(relations)
 }
 
-#' MITRE Shield as visNetwork
+#' MITRE Shield objects as nodes in a data frame
 #'
-#' @return ETL process that read source data from \url{https://github.com/MITRECND/mitrecnd.github.io/tree/master/_data} .
-#'   It returns a visNetwork object ready for analyze and plot.
-#' @export
-#' @examples
-#' \donttest{
-#' shieldnetwork <- getShieldNetwork()
-#' }
-getShieldNetwork <- function() {
-  # MITRE Shield Network as igraph
-  relations <- getShieldRelations()
-
+#' @return data.frame
+#' @keywords internal
+getShieldNodes <- function() {
   ## NODES
   # Ref: https://datastorm-open.github.io/visNetwork/nodes.html
   nodes <- data.frame(
@@ -231,28 +190,30 @@ getShieldNetwork <- function() {
     shape = character(0),
     title = character(0),
     color = character(0),
-    shadow = logical(0)
+    shadow = logical(0),
+    team = character(0)
   )
   shield_nodes <- nodes
 
   ### Tactics nodes
   df <- getShieldTactics()
   df$label <- df$id
-  df$group <- rep("tactic", nrow(df))
+  df$group <- rep("shield-tactic", nrow(df))
   df$value <- rep(5, nrow(df))
   df$shape <- rep("triangle", nrow(df))
   df$title <- paste0("<p><b>", df$name, "</b><br>", df$description, "</p>")
-  df$color <- rep("darkred", nrow(df))
+  df$color <- rep("gold", nrow(df))
   df$description <- NULL
   df$name <- NULL
   df$long_description <- NULL
+  df$team <- rep("BLUE", nrow(df))
 
   shield_nodes <- rbind(shield_nodes, df)
 
   ### Techniques nodes
   df <- getShieldTechniques()
   df$label <- df$id
-  df$group <- rep("technique", nrow(df))
+  df$group <- rep("shield-technique", nrow(df))
   df$value <- rep(4, nrow(df))
   df$shape <- rep("square", nrow(df))
   df$title <- paste0("<p><b>", df$name, "</b><br>", df$description, "</p>")
@@ -260,46 +221,83 @@ getShieldNetwork <- function() {
   df$description <- NULL
   df$name <- NULL
   df$long_description <- NULL
+  df$team <- rep("BLUE", nrow(df))
 
   shield_nodes <- rbind(shield_nodes, df)
 
   ### Opportunities nodes
   df <- getShieldOpportunities()
   df$label <- df$id
-  df$group <- rep("opportunity", nrow(df))
+  df$group <- rep("shield-opportunity", nrow(df))
   df$value <- rep(2, nrow(df))
   df$shape <- rep("star", nrow(df))
   df$title <- paste0("<p><b>", df$description, "</b></p>")
-  df$color <- rep("grey", nrow(df))
+  df$color <- rep("khaki", nrow(df))
   df$description <- NULL
+  df$team <- rep("BLUE", nrow(df))
 
   shield_nodes <- rbind(shield_nodes, df)
 
   ### Procedures nodes
   df <- getShieldProcedures()
   df$label <- df$id
-  df$group <- rep("procedure", nrow(df))
+  df$group <- rep("shield-procedure", nrow(df))
   df$value <- rep(4, nrow(df))
   df$shape <- rep("box", nrow(df))
   df$title <- paste0("<p><b>", df$description, "</b></p>")
-  df$color <- rep("purple", nrow(df))
+  df$color <- rep("yellow", nrow(df))
   df$description <- NULL
+  df$team <- rep("BLUE", nrow(df))
 
   shield_nodes <- rbind(shield_nodes, df)
 
   ### Use Cases nodes
   df <- getShieldUseCases()
   df$label <- df$id
-  df$group <- rep("usecase", nrow(df))
+  df$group <- rep("shield-usecase", nrow(df))
   df$value <- rep(4, nrow(df))
   df$shape <- rep("ellipse", nrow(df))
   df$title <- paste0("<p><b>", df$description, "</b></p>")
-  df$color <- rep("yellow", nrow(df))
+  df$color <- rep("purple", nrow(df))
   df$description <- NULL
+  df$team <- rep("BLUE", nrow(df))
 
   shield_nodes <- rbind(shield_nodes, df)
+  shield_nodes$shadow <- rep(FALSE, nrow(shield_nodes))
 
-  shieldnet <- visNetwork::visNetwork(shield_nodes, relations)
+  return(shield_nodes)
+}
+
+#' MITRE  ETL process that read source data from \url{https://github.com/MITRECND/mitrecnd.github.io/tree/master/_data} .
+#' It returns a visNetwork object ready for analyze and plot.
+#'
+#' @return list of nodes and edges
+#' @keywords internal
+getShieldNetwork <- function() {
+  # MITRE Shield Network as igraph
+  relations <- getShieldRelations()
+  shield_nodes <- getShieldNodes()
+
+  shieldnet <- list(nodes = shield_nodes,
+                    edges = relations)
 
   return(shieldnet)
+}
+
+#' ETL process that download current shield definitions and return a list of
+#' data frames for each object. The list also contains a visNetwork object with
+#' SHIELD objects as nodes and all relations as edges.
+#'
+#' @param verbose Default set as FALSE
+#'
+#' @return list of data frames
+getShieldData <- function(verbose = FALSE) {
+  if (verbose) print(paste("[*][SHIELD] Building output ..."))
+  shield <- list(tactics = getShieldTactics(),
+                 techniques = getShieldTechniques(),
+                 opportunities = getShieldOpportunities(),
+                 procedures = getShieldProcedures(),
+                 usecases = getShieldUseCases(),
+                 shieldnet = getShieldNetwork())
+  return(shield)
 }

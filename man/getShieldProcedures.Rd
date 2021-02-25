@@ -2,19 +2,15 @@
 % Please edit documentation in R/shield.R
 \name{getShieldProcedures}
 \alias{getShieldProcedures}
-\title{MITRE Shield Procedures data frame}
+\title{ETL process that read source data from \url{https://github.com/MITRECND/mitrecnd.github.io/tree/master/_data} .}
 \usage{
 getShieldProcedures()
 }
 \value{
-ETL process that read source data from \url{https://github.com/MITRECND/mitrecnd.github.io/tree/master/_data} .
+MITRE Shield Procedures data frame
   The data frame columns are: id, description.
 }
 \description{
-MITRE Shield Procedures data frame
+ETL process that read source data from \url{https://github.com/MITRECND/mitrecnd.github.io/tree/master/_data} .
 }
-\examples{
-\donttest{
-procedures <- getShieldProcedures()
-}
-}
+\keyword{internal}

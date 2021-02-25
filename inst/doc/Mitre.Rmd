@@ -1,8 +1,8 @@
 ---
-title: "Introduction"
+title: "Mitre"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Introduction}
+  %\VignetteIndexEntry{Mitre}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -13,26 +13,28 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
+
 You can explore MITRE Shield data frames as you usually analyze data, but
 the power reside in relations. Let's try to visualize the hole graph with 
 a ShinyApp... let's call it: MITRExplorer.
   
-  
-
 # MITRExplorer
 This is as Proof Of Concept project to provide an exploration tool for 
 MITRE data sets.
 
 Try to build your own MITRExplorer app using the following code for ui and server.
 
-## ui.R
-```{r ui_file}
+## Shinyapp demo
+```{r shiny_demo}
 # library(shiny)
 # library(visNetwork)
+# library(mitre)
+# 
+# mitredata <- mitre::getLatestDataSet()
+# shieldnet <- mitredata$standards$shield$shieldnet
 # 
 # # Define UI for application that draws a histogram
-# shinyUI(fluidPage(
-# 
+# ui <- shinyUI(fluidPage(
 #    # Application title
 #    titlePanel("MITRE Shield Explorer"),
 #    # Show a plot of the generated distribution
@@ -40,20 +42,9 @@ Try to build your own MITRExplorer app using the following code for ui and serve
 #        visNetworkOutput("shieldnetwork")
 #    )
 # ))
-```
-  
-  
-## server.R
-```{r server_file}
-# library(shiny)
-# library(mitre)
-# library(visNetwork)
 # 
-# mitredata <- mitre::getLatestDataSet()
-# shieldnet <- mitredata$standards$shield$shieldnet
-# 
-# shinyServer(function(input, output) {
-# 
+# ## server.R
+# server <- shinyServer(function(input, output) {
 #    output$shieldnetwork <- renderVisNetwork({
 #       ggnet <- visNetwork(nodes = shieldnet$nodes,
 #                           edges = shieldnet$edges)
@@ -62,30 +53,9 @@ Try to build your own MITRExplorer app using the following code for ui and serve
 #          visLayout(randomSeed = 123)
 #    })
 # })
+# 
+# shiny::shinyApp(ui, server)
 ```
 
-## Run MITRExplorer
-Open RStudio, check your working directory and run the app.
-```{r runapp}
-# shiny::runApp()
-```
+Check this app running in [here](https://security.shinyapps.io/mitreshield/) as free shinyapps.io service.
 
-### Main explorer
-The package visNetwork does the magic:
-
-![MITRExplorer](images/mitrexplorer.PNG)
-
-### Select objects
-It's possible to interact with the network (zoom in, zoom out, drag object, etc.).
-Selecting an object will pop up its description and highlight its relations.
-Try it selecting one object from list or point and click.
-
-![MITRExplorer](images/mitrexplr_dte.PNG)
-  
-### Details for DTE0031
-
-![MITRExplorer](images/mitrexplr_dte0031.PNG)
-
-## MITRExplorer online
-
-[MITRExplorer](https://security.shinyapps.io/mitreshield/)

@@ -4,13 +4,16 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
-## ----ui_file------------------------------------------------------------------
+## ----shiny_demo---------------------------------------------------------------
 # library(shiny)
 # library(visNetwork)
+# library(mitre)
+# 
+# mitredata <- mitre::getLatestDataSet()
+# shieldnet <- mitredata$standards$shield$shieldnet
 # 
 # # Define UI for application that draws a histogram
-# shinyUI(fluidPage(
-# 
+# ui <- shinyUI(fluidPage(
 #    # Application title
 #    titlePanel("MITRE Shield Explorer"),
 #    # Show a plot of the generated distribution
@@ -18,17 +21,9 @@ knitr::opts_chunk$set(
 #        visNetworkOutput("shieldnetwork")
 #    )
 # ))
-
-## ----server_file--------------------------------------------------------------
-# library(shiny)
-# library(mitre)
-# library(visNetwork)
 # 
-# mitredata <- mitre::getLatestDataSet()
-# shieldnet <- mitredata$standards$shield$shieldnet
-# 
-# shinyServer(function(input, output) {
-# 
+# ## server.R
+# server <- shinyServer(function(input, output) {
 #    output$shieldnetwork <- renderVisNetwork({
 #       ggnet <- visNetwork(nodes = shieldnet$nodes,
 #                           edges = shieldnet$edges)
@@ -37,7 +32,6 @@ knitr::opts_chunk$set(
 #          visLayout(randomSeed = 123)
 #    })
 # })
-
-## ----runapp-------------------------------------------------------------------
-# shiny::runApp()
+# 
+# shiny::shinyApp(ui, server)
 

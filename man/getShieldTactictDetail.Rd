@@ -12,8 +12,4 @@ data.frame
 \description{
 MITRE Shield Tactics detailed data frame
 }
-\examples{
-\donttest{
-tactics <- getShieldTactictDetail()
-}
-}
+\keyword{internal}
