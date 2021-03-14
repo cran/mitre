@@ -8,7 +8,7 @@
 getCWEData <- function(verbose = FALSE) {
   cwes.file <- "data-raw/cwec_v4.3.xml"
   if (verbose) print("[.][CWE] Indexing CWE XML raw file ...")
-  doc <- suppressWarnings(rvest::html(cwes.file))
+  doc <- rvest::read_html(cwes.file)
   cwes.weaknesses <- ParseCWEWeaknesses(doc, cwes.file, verbose)
   cwes.categories <- ParseCWECategories(doc, cwes.file, verbose)
   cwes.views <- ParseCWEViews(doc, cwes.file, verbose)
@@ -26,8 +26,8 @@ getCWENetwork <- function(cwes, verbose) {
   cwenodes <- cwes[, c("Code_Standard", "Name", "Description", "Status", "Abstraction")]
   names(cwenodes) <- c("id", "label", "title", "shadow", "group")
   cwenodes$shadow <- cwenodes$shadow %in% c("Deprecated", "Obsolete", "Incomplete")
-  cwenodes$value <- rep(4, nrow(cwenodes))
-  cwenodes$shape <- rep("database", nrow(cwenodes))
+  cwenodes$value <- rep(2, nrow(cwenodes))
+  cwenodes$shape <- rep("rectangle", nrow(cwenodes))
   cwenodes$color <- rep("papayawhip", nrow(cwenodes))
   cwenodes$group <- rep("cwe", nrow(cwenodes))
   cwenodes$team <- rep("BLUE", nrow(cwenodes))

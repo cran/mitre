@@ -1,21 +1,22 @@
 #' Returns a list of nodes and edges (neighbors) based on input node.
 #'
-#' @param node MITRE Standard Id
+#' @param nodes MITRE Standard Id as character vector
 #' @param direction value should be: "from", "to" or "both"
 #' @param mitrenet MITRE network built with this package
 #' @param verbose default is FALSE
 #'
 #' @return list of nodes and edges
-#' @export
-getNodeNeighbors <- function(node = "T1104", direction = "both",
+getNodeNeighbors <- function(nodes = c("T1104"), direction = "both",
                              mitrenet = getLatestDataSet()[["mitrenet"]], verbose = FALSE) {
+  # nodes <- c("CVE-2017-8535", "CVE-2017-8536", "CVE-2017-8537", "CVE-2017-8539", "CVE-2017-8542")
+  nodes <- mitrenet$nodes[mitrenet$nodes$name %in% nodes, "id"]
   # Collect input node
-  nnodes <- mitrenet$nodes[mitrenet$nodes$id == node, ]
+  nnodes <- mitrenet$nodes[mitrenet$nodes$id %in% nodes, ]
   eedges <- utils::head(mitrenet$edges, 0)
 
   if (direction %in% c("from", "both")) {
     # Find edges from node
-    efrom <- mitrenet$edges[mitrenet$edges$from %in% node, ]
+    efrom <- mitrenet$edges[mitrenet$edges$from %in% nodes, ]
     # Collect destination nodes
     nfrom <- mitrenet$nodes[mitrenet$nodes$id %in% efrom$to, ]
     # Update Neighbors
@@ -25,7 +26,7 @@ getNodeNeighbors <- function(node = "T1104", direction = "both",
 
   if (direction %in% c("to", "both")) {
     # Find edges where destination is node
-    eto <- mitrenet$edges[mitrenet$edges$to %in% node, ]
+    eto <- mitrenet$edges[mitrenet$edges$to %in% nodes, ]
     # Collect those nodes
     nto <- mitrenet$nodes[mitrenet$nodes$id %in% eto$from, ]
     # Update Neighbors
@@ -40,4 +41,31 @@ getNodeNeighbors <- function(node = "T1104", direction = "both",
              edges = eedges)
 
   return(nn)
+}
+
+#' Given a mitre network it returns the same without deprecated nodes
+#'
+#' @param mitrenet MITRE network built with this package
+#' @param verbose default is FALSE
+#'
+#' @return list of nodes and edges
+omitDeprecated <- function(mitrenet = getLatestDataSet()[["mitrenet"]], verbose = FALSE) {
+  # Select nodes not deprecated
+  nodes <- mitrenet$nodes
+  nodes <- unique(nodes[!nodes$shadow, ])
+
+  # Select edges related to nodes
+  edges <- mitrenet$edges[((mitrenet$edges$from %in% nodes$id) &
+                             (mitrenet$edges$to %in% nodes$id)), ]
+  edges <- unique(edges)
+
+  # Select nodes in relationships
+  # nodes <- nodes[((nodes$id %in% edges$from) &
+  #                   (nodes$id %in% edges$to)), ]
+  nodes <- nodes[nodes$id %in% unique(c(edges$from, edges$to)), ]
+
+  mitrenet$nodes <- nodes
+  mitrenet$edges <- edges
+
+  return(mitrenet)
 }

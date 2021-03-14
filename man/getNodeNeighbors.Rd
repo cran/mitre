@@ -5,14 +5,14 @@
 \title{Returns a list of nodes and edges (neighbors) based on input node.}
 \usage{
 getNodeNeighbors(
-  node = "T1104",
+  nodes = c("T1104"),
   direction = "both",
   mitrenet = getLatestDataSet()[["mitrenet"]],
   verbose = FALSE
 )
 }
 \arguments{
-\item{node}{MITRE Standard Id}
+\item{nodes}{MITRE Standard Id as character vector}
 
 \item{direction}{value should be: "from", "to" or "both"}
 
