@@ -1,7 +1,7 @@
 Package: mitre
 Type: Package
 Title: Cybersecurity MITRE Standards Data and Digraphs
-Version: 0.6.0
+Version: 1.0.0
 Authors@R: person("Humbert", "Costas", email = "humbert.costas@gmail.com",
                role = c("aut", "cre"))
 Maintainer: Humbert Costas <humbert.costas@gmail.com>
@@ -15,16 +15,14 @@ License: CC0
 URL: https://github.com/motherhack3r/mitre
 BugReports: https://github.com/motherhack3r/mitre/issues
 Encoding: UTF-8
-Imports: dplyr, plyr, tidyr, xml2, rvest, jsonlite, RJSONIO, stringr,
-        httr, yaml, rlang, igraph
+Imports: rlang, plyr, dplyr, igraph, stringr, jsonlite, RJSONIO, tidyr
 RoxygenNote: 7.1.1
-Suggests: visNetwork, knitr, rmarkdown, utils, shiny, curl, testthat
-        (>= 3.0.0)
+Suggests: rmarkdown, knitr, testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Depends: R (>= 2.10)
 Config/testthat/edition: 3
 NeedsCompilation: no
-Packaged: 2021-04-24 16:45:08 UTC; humbe
+Packaged: 2021-05-19 20:28:34 UTC; humbe
 Author: Humbert Costas [aut, cre]
 Repository: CRAN
-Date/Publication: 2021-04-24 22:40:02 UTC
+Date/Publication: 2021-05-21 07:20:03 UTC
